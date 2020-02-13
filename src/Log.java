@@ -10,7 +10,6 @@ public class Log {
     Scanner fileInput = new Scanner(file);
     PrintStream output = new PrintStream(new FileOutputStream(file, true));
     Text menu = new Text();
-    AES aes = new AES();
 
     // variables ->
     String masterKey, masterKeyAttempt;
@@ -54,8 +53,9 @@ public class Log {
                     System.out.print("ALL INFO STORED\nEnter Master Key: ");
                     masterKeyAttempt = keyboard.next();
                     if (masterKeyAttempt.equals(masterKey)) {
+                        System.out.print("STORED PASSWORD ELEMENT\n");
                         for (int i = 0; i < counter; i++) {
-                            System.out.printf("%s%s%25s%25s%n", "~ ", sites.get(i), usernames.get(i), aes.decrypt(passwords.get(i), masterKey));
+                            System.out.printf("%s%s%25s%25s%n", "~ ", sites.get(i), usernames.get(i), AES.decrypt(passwords.get(i), masterKey));
                         }
                     } else {
                         System.out.print(menu.printIncorrect());
@@ -67,9 +67,16 @@ public class Log {
                     System.out.print("PASSWORD FINDER\nEnter Master Key: ");
                     masterKeyAttempt = keyboard.next();
                     if (masterKeyAttempt.equals(masterKey)) {
-
+                        System.out.print("Enter site: ");
+                        String siteInput = keyboard.next();
+                        for (int i = 0; i < counter; i++) {
+                            if (siteInput.equals(sites.get(i))) {
+                                System.out.printf("%s%s%n%s%s", "Username: ", usernames.get(i), "Password: ", AES.decrypt(passwords.get(i), masterKey));
+                            }
+                        }
                     } else {
                         System.out.print(menu.printIncorrect());
+                        break;
                     }
                     break;
                 // CASE 4 = add a new site, username, & password
@@ -80,7 +87,7 @@ public class Log {
                     System.out.print("Username: ");
                     usernames.add(keyboard.next());
                     System.out.print("Password: ");
-                    passwords.add(aes.encrypt(keyboard.next(), masterKey));
+                    passwords.add(AES.encrypt(keyboard.next(), masterKey));
                     int element = sites.size() - 1;
                     output.print("\n" + sites.get(element)+ "                    " + usernames.get(element) +
                             "                    " + passwords.get(element));
@@ -98,7 +105,7 @@ public class Log {
                         String tempMasterKeyTwo = keyboard.next();
                         if (tempMasterKeyOne.equals(tempMasterKeyTwo)) {
                             masterKey = tempMasterKeyOne;
-                            aes.setNewMaterkey(1, masterKey);
+                            AES.setNewMaterkey(1, masterKey);
                             System.out.print("\nMASTER KEY HAS BEEN CHANGED");
                         } else {
                             System.out.print(menu.printIncorrect());
