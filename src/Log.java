@@ -13,7 +13,7 @@ public class Log {
     AES aes = new AES();
 
     // variables ->
-    String masterKey;
+    String masterKey, masterKeyAttempt;
     private ArrayList<String> sites = new ArrayList<>();
     private ArrayList<String> usernames = new ArrayList<>();
     private ArrayList<String> passwords = new ArrayList<>();
@@ -50,9 +50,27 @@ public class Log {
                     break;
                 // CASE 2 = print all info that is stored
                 case 2:
+                    System.out.print(menu.printHeading());
+                    System.out.print("ALL INFO STORED\nEnter Master Key: ");
+                    masterKeyAttempt = keyboard.next();
+                    if (masterKeyAttempt.equals(masterKey)) {
+                        for (int i = 0; i < counter; i++) {
+                            System.out.printf("%s%s%25s%25s%n", "~ ", sites.get(i), usernames.get(i), aes.decrypt(passwords.get(i), masterKey));
+                        }
+                    } else {
+                        System.out.print(menu.printIncorrect());
+                    }
                     break;
                 // CASE 3 = retrieve a specific username & password
                 case 3:
+                    System.out.print(menu.printHeading());
+                    System.out.print("PASSWORD FINDER\nEnter Master Key: ");
+                    masterKeyAttempt = keyboard.next();
+                    if (masterKeyAttempt.equals(masterKey)) {
+
+                    } else {
+                        System.out.print(menu.printIncorrect());
+                    }
                     break;
                 // CASE 4 = add a new site, username, & password
                 case 4:
@@ -107,5 +125,4 @@ public class Log {
         keyboard.close();
         System.exit(0);
     }
-
 }
