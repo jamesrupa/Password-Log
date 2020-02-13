@@ -26,7 +26,7 @@ public class Text {
                 "2.    PRINT ALL STORED INFO\n" +
                 "3.    RETRIEVE USERNAME & PASSWORD\n" +
                 "4.    ADD SITE, USERNAME, & PASSWORD\n" +
-                "5.    CHANGE MASTER CODE\n" +
+                "5.    CHANGE MASTER KEY\n" +
                 "6.    QUIT\n" +
                 "----------------------------------------------------\n\n> ";
     }
@@ -40,11 +40,20 @@ public class Text {
     }
 
     public String printSitesHeading(){
-        return "\n----------------------------------------------------\n";
+        return "\n----------------------------------------------------\n" +
+                "SITES:\n";
     }
 
     public String printAllInfoHeading() {
         return "";
+    }
+
+    public String printIncorrect() {
+        return "\nINPUT IS INCORRECT\nPLEASE TRY AGAIN LATER";
+    }
+
+    public String printHeading() {
+        return "\n----------------------------------------------------\n";
     }
 }
 
