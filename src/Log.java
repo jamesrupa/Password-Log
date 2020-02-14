@@ -53,7 +53,7 @@ public class Log {
                     System.out.print("ALL INFO STORED\nEnter Master Key: ");
                     masterKeyAttempt = keyboard.next();
                     if (masterKeyAttempt.equals(masterKey)) {
-                        System.out.print("STORED PASSWORD ELEMENT\n");
+                        System.out.print("ALL STORED INFORMATION\n");
                         for (int i = 0; i < counter; i++) {
                             System.out.printf("%s%s%25s%25s%n", "~ ", sites.get(i), usernames.get(i), AES.decrypt(passwords.get(i), masterKey));
                         }
