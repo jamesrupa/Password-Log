@@ -26,8 +26,10 @@ public class Text {
                 "2.    PRINT ALL STORED INFO\n" +
                 "3.    RETRIEVE USERNAME & PASSWORD\n" +
                 "4.    ADD SITE, USERNAME, & PASSWORD\n" +
-                "5.    CHANGE MASTER KEY\n" +
-                "6.    QUIT\n" +
+                "5.    CHANGE SITE, USERNAME, & PASSWORD\n" +
+                "6.    REMOVE SITE, USERNAME, & PASSWORD\n" +
+                "7.    CHANGE MASTER KEY\n" +
+                "8.    QUIT\n" +
                 "----------------------------------------------------\n\n> ";
     }
 

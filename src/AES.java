@@ -71,7 +71,7 @@ public class AES {
     public static void setNewMaterkey(int lineNumber, String data) throws IOException {
         Path path = Paths.get("passwords.txt");
         List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
-        lines.set(lineNumber - 1, data);
+        lines.set(lineNumber, data);
         Files.write(path, lines, StandardCharsets.UTF_8);
     }
 }

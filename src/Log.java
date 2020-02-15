@@ -1,5 +1,10 @@
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Log {
@@ -13,6 +18,7 @@ public class Log {
 
     // variables ->
     String masterKey, masterKeyAttempt;
+    public int counter = 0;
     private ArrayList<String> sites = new ArrayList<>();
     private ArrayList<String> usernames = new ArrayList<>();
     private ArrayList<String> passwords = new ArrayList<>();
@@ -22,7 +28,6 @@ public class Log {
     }
 
     public int readFile() {
-        int counter = 0;
         masterKey = fileInput.next();
         while (fileInput.hasNext()) {
             sites.add(fileInput.next());
@@ -89,12 +94,73 @@ public class Log {
                     System.out.print("Password: ");
                     passwords.add(AES.encrypt(keyboard.next(), masterKey));
                     int element = sites.size() - 1;
+                    counter++;
                     output.print("\n" + sites.get(element)+ "                    " + usernames.get(element) +
                             "                    " + passwords.get(element));
                     System.out.printf("%n%s%s", "SUCCESSFULLY LOGGED new user from ", sites.get(element));
                     break;
-                // CASE 5 = change the master key for encryption and decryption
+                // CASE 5 = change a site, username, & password
                 case 5:
+                    int lineNumber = 0;
+                    System.out.print(menu.printHeading());
+                    System.out.print("CHANGE STORED INFO\nEnter Master Key: ");
+                    masterKeyAttempt = keyboard.next();
+                    if (masterKeyAttempt.equals(masterKey)) {
+                        System.out.print("Enter site: ");
+                        String siteInput = keyboard.next();
+                        for (int i = 0; i < counter; i++) {
+                            lineNumber++;
+                            if (siteInput.equals(sites.get(i))) {
+                                System.out.print("Enter new username: ");
+                                String newUser = keyboard.next();
+                                System.out.print("Enter new password: ");
+                                String newPass = AES.encrypt(keyboard.next(), masterKey);
+                                usernames.set(i, newUser);
+                                passwords.set(i, newPass);
+                                Path path = Paths.get("passwords.txt");
+                                List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+                                lines.set(lineNumber, sites.get(i) + "                    "+ usernames.get(i) + "                    " + passwords.get(i));
+                                Files.write(path, lines, StandardCharsets.UTF_8);
+                                System.out.print("Succesfully changed info about " + siteInput);
+                                break;
+                            }
+                        }
+                    } else {
+                        System.out.print(menu.printIncorrect());
+                        break;
+                    }
+                    break;
+                // CASE 6 = remove a site, username, & password
+                case 6:
+                    int anotherLineNumber = 0;
+                    System.out.print(menu.printHeading());
+                    System.out.print("REMOVE STORED INFO\nEnter Master Key: ");
+                    masterKeyAttempt = keyboard.next();
+                    if (masterKeyAttempt.equals(masterKey)) {
+                        System.out.print("Enter site: ");
+                        String siteInput = keyboard.next();
+                        for (int i = 0; i < counter; i++) {
+                            anotherLineNumber++;
+                            if (siteInput.equals(sites.get(i))) {
+                                Path path = Paths.get("passwords.txt");
+                                List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+                                lines.set(anotherLineNumber, "");
+                                Files.write(path, lines, StandardCharsets.UTF_8);
+                                System.out.print("Succesfully deleted info about " + siteInput);
+                                sites.remove(i);
+                                usernames.remove(i);
+                                passwords.remove(i);
+                                counter--;
+                                break;
+                            }
+                        }
+                    } else {
+                        System.out.print(menu.printIncorrect());
+                        break;
+                    }
+                    break;
+                // CASE 7 = change the master key for encryption and decryption
+                case 7:
                     System.out.print(menu.printHeading());
                     System.out.print("CHANGE MASTER KEY\nCurrent Master Key: ");
                     String inputKey = keyboard.next();
@@ -114,8 +180,8 @@ public class Log {
                         System.out.print(menu.printIncorrect());
                     }
                     break;
-                // CASE 6 = quits the running program
-                case 6:
+                // CASE 8 = quits the running program
+                case 8:
                     quitProgram();
                     break;
                 // all other cases
