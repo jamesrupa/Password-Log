@@ -1,13 +1,17 @@
 # Password Logger
 > Secure Java Password Logbook Application
 
-One to two paragraph statement about your product and what it does.
+Password Log stores website information, usernames, and passwords on a text file. However,
+when saved onto a file all passwords are stored securely and hashed. Later when running the
+program and having to access the information, the program will unhash and print the user's
+password. 
 
 ![](passwordLog.png)
 
 ## Usage example
 
-A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
+Password Log can be useful for those that can't remember their passwords on certain websites.
+It also allows you to secure each password securely on your computer without having to save it on a cloud.
 
 ## Release History
 
